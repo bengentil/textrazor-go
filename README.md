@@ -37,3 +37,8 @@ Getting Started
 	  }
 	}
 	```
+
+Documentation
+=============
+
+Documentation is available on [https://godoc.org/github.com/bengentil/textrazor-go](https://godoc.org/github.com/bengentil/textrazor-go)
