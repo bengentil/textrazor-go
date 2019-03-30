@@ -124,20 +124,20 @@ func (a *Analysis) setHTTPResponse(r *HTTPResponse) { a.HTTPResponse = r }
 
 // Entity https://www.textrazor.com/docs/rest#Entity
 type Entity struct {
-	ID              int                    `json:"id"`
-	EntityID        string                 `json:"entityId"`
-	EntityEnglishID string                 `json:"entityEnglishId"`
-	CustomEntityID  string                 `json:"customEntityId"`
-	ConfidenceScore float32                `json:"confidenceScore"`
-	Types           []string               `json:"type"`
-	FreebaseTypes   []string               `json:"freebaseTypes"`
-	FreebaseID      string                 `json:"freebaseId"`
-	WikidataID      string                 `json:"wikidataId"`
-	MatchingTokens  []int                  `json:"matchingTokens"`
-	MatchedText     string                 `json:"matchedText"`
-	Data            map[string]interface{} `json:"data"`
-	RelevanceScore  float32                `json:"relevanceScore"`
-	WikiLink        string                 `json:"wikiLink"`
+	ID              int               `json:"id"`
+	EntityID        string            `json:"entityId"`
+	EntityEnglishID string            `json:"entityEnglishId"`
+	CustomEntityID  string            `json:"customEntityId"`
+	ConfidenceScore float32           `json:"confidenceScore"`
+	Types           []string          `json:"type"`
+	FreebaseTypes   []string          `json:"freebaseTypes"`
+	FreebaseID      string            `json:"freebaseId"`
+	WikidataID      string            `json:"wikidataId"`
+	MatchingTokens  []int             `json:"matchingTokens"`
+	MatchedText     string            `json:"matchedText"`
+	Data            map[string]string `json:"data"`
+	RelevanceScore  float32           `json:"relevanceScore"`
+	WikiLink        string            `json:"wikiLink"`
 }
 
 // Topic https://www.textrazor.com/docs/rest#Topic
@@ -243,10 +243,10 @@ func (d *Dictionary) setHTTPResponse(r *HTTPResponse) { d.HTTPResponse = r }
 
 // DictionaryEntry https://www.textrazor.com/docs/rest#DictionaryEntry
 type DictionaryEntry struct {
-	HTTPResponse *HTTPResponse          `json:"-"`
-	ID           string                 `json:"id"`
-	Text         string                 `json:"text"`
-	Data         map[string]interface{} `json:"data"`
+	HTTPResponse *HTTPResponse     `json:"-"`
+	ID           string            `json:"id"`
+	Text         string            `json:"text"`
+	Data         map[string]string `json:"data"`
 }
 
 func (e *DictionaryEntry) setHTTPResponse(r *HTTPResponse) { e.HTTPResponse = r }
@@ -476,7 +476,7 @@ func (c *Client) DeleteDictionary(ID string) (*HTTPResponse, error) {
 
 // AddDictionaryEntries adds entries to a dictionary
 func (c *Client) AddDictionaryEntries(ID string, e []DictionaryEntry) (*HTTPResponse, error) {
-	return c.doRequest("/entities/"+ID+"/", http.MethodPut, DefaultHeaders(contentTypeJSON), &DictionaryEntryList{Entries: e}, &EmptyResponse{})
+	return c.doRequest("/entities/"+ID+"/", http.MethodPost, DefaultHeaders(contentTypeJSON), &DictionaryEntryList{Entries: e}, &EmptyResponse{})
 }
 
 // AddDictionaryEntry adds an entry to a dictionary
